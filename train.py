@@ -121,8 +121,16 @@ def validate_epoch(model, val_dataloader, device, criterion):
 # MAIN def
 def main():
 
+    parser = argparse.ArgumentParser(description='Training Args.')
+
+    parser.add_argument('--cf', '-config_file', required='True', type=str, metavar='config_file', help='Configuration .yaml file')
+
+    parser_args = parser.parse_args()
+
+    cf_file = vars(parser_args)
+
     # initialize parser
-    with open("training_args.yaml", 'r') as stream:
+    with open(cf_file, 'r') as stream:
         args=yaml.safe_load(stream)
 
 

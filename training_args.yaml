@@ -1,7 +1,7 @@
 ---
 # w&b
-project_name: 'CANCER'
-name: 'run_1'
+project_name: 'TUMOR_DETECTION'
+name: 'network_3_convs_1_fc'
 group: 'brain'
 
 # dataset
@@ -20,6 +20,6 @@ scheme: False
 # weights
 
 save_dir: './weights/brain/'
-workers: 2
-fp16: None
+# workers: 
+# fp16: None
 device: 'mps'
