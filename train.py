@@ -123,11 +123,11 @@ def main():
 
     parser = argparse.ArgumentParser(description='Training Args.')
 
-    parser.add_argument('--cf', '-config_file', required='True', type=str, metavar='config_file', help='Configuration .yaml file')
+    parser.add_argument('-cf', '--conf_file', required='True', type=str, metavar='conf_file', help='Configuration .yaml file')
 
-    parser_args = parser.parse_args()
+    parser_args = vars(parser.parse_args())
 
-    cf_file = vars(parser_args)
+    cf_file = parser_args["conf_file"]
 
     # initialize parser
     with open(cf_file, 'r') as stream:
@@ -135,7 +135,7 @@ def main():
 
 
     # initialize weights and biases:
-    wandb.init(project=args['project_name'], name=args['name'], group=args["group"], save_code=True, config=args, mode='disabled')
+    wandb.init(project=args['project_name'], name=args['name'], group=args["group"], save_code=True, config=args, mode=args["mode"])
 
     # initialize model:
     model = network()
