@@ -16,11 +16,11 @@ class network(nn.Module):
         self.max_pool = nn.MaxPool2d((4,4))
         # self.max_pool_1 = nn.MaxPool2d((3,3))
         
-        self.conv_9 = nn.Conv2d(3, out_channels=32, kernel_size=(9,9), stride=(1,1))
+        self.conv_9 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=(9,9), stride=(1,1))
         self.conv_5 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(5,5), stride=(1,1))
-        # self.conv2 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3,3), stride=(1,1))
+        self.conv_7 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(7,7), stride=(1,1))
 
-        self.fc0 = nn.Linear(in_features=5408, out_features=2048)
+        self.fc0 = nn.Linear(in_features=128, out_features=2048)
         self.fc1 = nn.Linear(in_features=2048, out_features=256)
         self.fc2 = nn.Linear(in_features=256, out_features=1)
 
@@ -35,7 +35,7 @@ class network(nn.Module):
             module.weight.data.normal_(mean=0.0, std=1.0)
             if module.bias is not None:
                 module.bias.data.zero_()
-        print('Weights initialized successfully!')
+        # print('Weights initialized successfully!')
 
 
     def forward(self, x):
@@ -57,6 +57,16 @@ class network(nn.Module):
         # # print('ok max pool 0', x.shape)
 
         # # x = self.zero_pad(x)
+
+        x = self.conv_7(x)
+        # # print('ok conv0', x.shape)
+
+        x = self.batch_norm(x)
+        # # print('ok bn', x.shape)
+        x = self.relu(x)
+        # # print('ok relu', x.shape)
+
+        x = self.max_pool(x)
 
         x = self.conv_5(x)
         # # print('ok con1', x.shape)
