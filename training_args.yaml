@@ -1,8 +1,9 @@
 ---
 # w&b
 project_name: 'TUMOR_DETECTION'
-name: 'network_3_convs_1_fc'
+name: 'network_3_convs_2_fc'
 group: 'brain'
+mode: 'disabled'
 
 # dataset
 train_dir: 'train_brain.csv'
