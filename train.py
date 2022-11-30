@@ -91,9 +91,11 @@ def validate_epoch(model, val_dataloader, device, criterion):
     print('Validating...')
 
     model.eval()
+    pbar = tqdm(val_dataloader, desc='Validation', unit='iter')
+
 
     running_loss, y_true, y_pred = [], [], []
-    for x, y in val_dataloader:
+    for x, y in pbar:
         x = x.to(device)
         y = y.to(device).unsqueeze(1)
 

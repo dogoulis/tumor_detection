@@ -16,11 +16,11 @@ class network(nn.Module):
         self.max_pool = nn.MaxPool2d((4,4))
         # self.max_pool_1 = nn.MaxPool2d((3,3))
         
-        self.conv_9 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=(9,9), stride=(1,1))
-        self.conv_5 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(5,5), stride=(1,1))
-        self.conv_7 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(7,7), stride=(1,1))
+        self.conv_9 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=(9,9), stride=(1,1), padding=(4,4))
+        self.conv_5 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(5,5), stride=(1,1), padding=(2,2))
+        self.conv_7 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(7,7), stride=(1,1), padding=(3,3))
 
-        self.fc0 = nn.Linear(in_features=128, out_features=2048)
+        self.fc0 = nn.Linear(in_features=288, out_features=2048)
         self.fc1 = nn.Linear(in_features=2048, out_features=256)
         self.fc2 = nn.Linear(in_features=256, out_features=1)
 
@@ -44,8 +44,10 @@ class network(nn.Module):
         # print(x.shape)
         # x = self.zero_pad(x)
         # print('ok pool', x.shape)
-
+        x_init = x
+        # print(x_init.shape[2:])
         x = self.conv_9(x)
+        assert x_init.shape[2:] == x.shape[2:] # for same convolution
         # # print('ok conv0', x.shape)
 
         x = self.batch_norm(x)
@@ -57,8 +59,9 @@ class network(nn.Module):
         # # print('ok max pool 0', x.shape)
 
         # # x = self.zero_pad(x)
-
+        x_init_2 = x
         x = self.conv_7(x)
+        assert x_init_2.shape[2:] == x.shape[2:]
         # # print('ok conv0', x.shape)
 
         x = self.batch_norm(x)
@@ -68,7 +71,9 @@ class network(nn.Module):
 
         x = self.max_pool(x)
 
+        x_init_3 = x
         x = self.conv_5(x)
+        assert x_init_3.shape[2:] == x.shape[2:]
         # # print('ok con1', x.shape)
         x = self.batch_norm(x)
         # # print('ok bn1', x.shape)
